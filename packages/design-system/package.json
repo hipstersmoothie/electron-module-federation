@@ -1,0 +1,15 @@
+{
+  "name": "@descript/design-system",
+  "private": true,
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn clean && webpack --config ./webpack.config.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
