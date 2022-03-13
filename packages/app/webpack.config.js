@@ -5,8 +5,19 @@ const packageJsonDeps = require("./package.json").dependencies;
 module.exports = [
   {
     mode: "development",
-    entry: "./src/main.js",
+    entry: "./src/main.ts",
     target: "electron-main",
+    module: {
+      rules: [
+        {
+          test: /\.(ts|tsx|js|jsx)$/,
+          loader: require.resolve("babel-loader"),
+          options: {
+            presets: [require.resolve("@babel/preset-typescript")],
+          },
+        },
+      ],
+    },
     output: {
       path: __dirname + "/dist",
       filename: "main.js",
@@ -14,19 +25,25 @@ module.exports = [
   },
   {
     mode: "development",
-    entry: "./src/renderer.js",
+    entry: "./src/renderer.ts",
     target: "electron-renderer",
     output: {
       path: __dirname + "/dist",
       filename: "renderer.js",
     },
+    resolve: {
+      extensions: [".js", ".json", ".ts", ".tsx"],
+    },
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(ts|tsx|js|jsx)$/,
           loader: require.resolve("babel-loader"),
           options: {
-            presets: [require.resolve("@babel/preset-react")],
+            presets: [
+              require.resolve("@babel/preset-react"),
+              require.resolve("@babel/preset-typescript"),
+            ],
           },
         },
       ],

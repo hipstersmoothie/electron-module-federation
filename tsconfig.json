@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    // "rootDir": ".",
+    // "outDir": "dist",
+    // "module": "esnext",
+    // "declaration": false,
+    // "declarationMap": false,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "paths": {
+      "@descript/design-system": ["packages/design-system/src/index.ts"]
+    }
+  }
+}

@@ -3,18 +3,24 @@ const packageJsonDeps = require("./package.json").dependencies;
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   output: {
     publicPath: "http://localhost:3001/",
     clean: true,
   },
+  resolve: {
+    extensions: [".js", ".json", ".ts", ".tsx"],
+  },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         loader: require.resolve("babel-loader"),
         options: {
-          presets: [require.resolve("@babel/preset-react")],
+          presets: [
+            require.resolve("@babel/preset-react"),
+            require.resolve("@babel/preset-typescript"),
+          ],
         },
       },
     ],
@@ -25,7 +31,7 @@ module.exports = {
       filename: "remote-design-system.js",
       library: { type: "var", name: "design_system" },
       exposes: {
-        ".": "./src/index.js",
+        ".": "./src/index.ts",
       },
       shared: {
         react: { singleton: true, requiredVersion: packageJsonDeps.react },
