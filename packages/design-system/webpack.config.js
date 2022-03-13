@@ -1,12 +1,13 @@
+const path = require("path");
 const { ModuleFederationPlugin } = require("webpack").container;
-const packageJsonDeps = require("./package.json").dependencies;
+const { dependencies, version } = require("./package.json");
 
 module.exports = {
   mode: "development",
   entry: "./src/index.ts",
   output: {
-    publicPath: "http://localhost:3001/",
-    clean: true,
+    publicPath: `http://localhost:3001/${version}/`,
+    path: path.join(__dirname, "dist", version),
   },
   resolve: {
     extensions: [".js", ".json", ".ts", ".tsx"],
@@ -31,10 +32,11 @@ module.exports = {
         ".": "./src/index.ts",
       },
       shared: {
-        react: { singleton: true, requiredVersion: packageJsonDeps.react },
+        react: { singleton: true, requiredVersion: dependencies.react },
         "react-dom": {
           singleton: true,
-          requiredVersion: packageJsonDeps["react-dom"],
+
+          requiredVersion: dependencies["react-dom"],
         },
       },
     }),

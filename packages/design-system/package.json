@@ -1,11 +1,11 @@
 {
   "name": "@descript/design-system",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn clean && webpack --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js"
   },
   "license": "MIT",
   "dependencies": {
