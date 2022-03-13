@@ -13,7 +13,7 @@ module.exports = [
           test: /\.(ts|tsx|js|jsx)$/,
           loader: require.resolve("babel-loader"),
           options: {
-            presets: [require.resolve("@babel/preset-typescript")],
+            root: "../..",
           },
         },
       ],
@@ -40,10 +40,7 @@ module.exports = [
           test: /\.(ts|tsx|js|jsx)$/,
           loader: require.resolve("babel-loader"),
           options: {
-            presets: [
-              require.resolve("@babel/preset-react"),
-              require.resolve("@babel/preset-typescript"),
-            ],
+            root: "../..",
           },
         },
       ],
