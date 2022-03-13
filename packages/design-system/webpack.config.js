@@ -25,7 +25,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "design_system",
-      filename: "remote-design-system.js",
+      filename: "remoteEntry.js",
       library: { type: "var", name: "design_system" },
       exposes: {
         ".": "./src/index.ts",

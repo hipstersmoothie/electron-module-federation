@@ -1,6 +1,42 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const endent = require("endent").default;
 const { ModuleFederationPlugin } = require("webpack").container;
 const packageJsonDeps = require("./package.json").dependencies;
+
+const remotes = {
+  "@descript/design-system":
+    "design_system@http://localhost:3001/remoteEntry.js",
+};
+
+const dynamicRemotes = Object.entries(remotes).reduce(
+  (acc, [alias, location]) => {
+    const [globalName, url] = location.split("@");
+    // acc[alias] = location;
+    acc[alias] = endent`promise new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = "${url}";
+
+      script.onload = () => {
+        const proxy = {
+          get: (request) => window.${globalName}.get(request),
+          init: (arg) => {
+            try {
+              return window.${globalName}.init(arg)
+            } catch(e) {
+              console.log('remote container already initialized')
+            }
+          }
+        }
+        resolve(proxy)
+      }
+
+      document.head.appendChild(script);
+    })`;
+
+    return acc;
+  },
+  {}
+);
 
 module.exports = [
   {
@@ -51,10 +87,7 @@ module.exports = [
       }),
       new ModuleFederationPlugin({
         name: "renderer",
-        remotes: {
-          "@descript/design-system":
-            "design_system@http://localhost:3001/remote-design-system.js",
-        },
+        remotes: dynamicRemotes,
         shared: {
           react: { singleton: true, requiredVersion: packageJsonDeps.react },
           "react-dom": {
