@@ -37,9 +37,9 @@ module.exports = [
       }),
       new ModuleFederationPlugin({
         name: "renderer",
-        remoteType: "var",
         remotes: {
-          "@descript/design-system": "design_system",
+          "@descript/design-system":
+            "design_system@http://localhost:3001/remote-design-system.js",
         },
         shared: {
           react: { singleton: true, requiredVersion: packageJsonDeps.react },
