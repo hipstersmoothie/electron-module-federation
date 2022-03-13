@@ -4,12 +4,16 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "build": "webpack --config ./webpack.config.js",
+    "start": "npm run build && electron ./dist/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^17.1.2"
+    "electron": "^17.1.2",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2"
   }
 }
