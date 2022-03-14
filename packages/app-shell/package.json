@@ -1,11 +1,12 @@
 {
   "name": "@descript/app-shell",
   "private": true,
+  "sideEffects": "false",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn clean && webpack --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js",
     "start": "electron ./dist/main.js"
   },
   "dependencies": {

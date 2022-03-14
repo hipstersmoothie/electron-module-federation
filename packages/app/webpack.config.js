@@ -2,9 +2,11 @@ const path = require("path");
 const endent = require("endent").default;
 const { ModuleFederationPlugin } = require("webpack").container;
 const { dependencies, version } = require("./package.json");
+const designSystem = require("../design-system/package.json");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.tsx",
   output: {
     publicPath: `http://localhost:3001/${version}/`,
@@ -12,6 +14,10 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".json", ".ts", ".tsx"],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   module: {
     rules: [
@@ -33,6 +39,9 @@ module.exports = {
         ".": "./src/index.tsx",
       },
       shared: {
+        "@descript/design-system": {
+          requiredVersion: `^${designSystem.version}`,
+        },
         react: { singleton: true, requiredVersion: dependencies.react },
         "react-dom": {
           singleton: true,

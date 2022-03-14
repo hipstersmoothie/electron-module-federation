@@ -1,7 +1,8 @@
 {
   "name": "@descript/app",
-  "private": true,
   "version": "1.0.1",
+  "private": true,
+  "sideEffects": false,
   "main": "src/index.tsx",
   "scripts": {
     "clean": "rm -rf dist",
