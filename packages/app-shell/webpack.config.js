@@ -3,40 +3,40 @@ const endent = require("endent").default;
 const { ModuleFederationPlugin } = require("webpack").container;
 const packageJsonDeps = require("./package.json").dependencies;
 
-// const remotes = {
-//   "@descript/design-system": "design_system@http://localhost:3001",
-// };
+const remotes = {
+  "@descript/app": "descript_app@http://localhost:3001",
+};
 
-// const dynamicRemotes = Object.entries(remotes).reduce(
-//   (acc, [alias, location]) => {
-//     const [globalName, url] = location.split("@");
-//     acc[alias] = endent`promise new Promise(async (resolve) => {
-//       const versionConfigReq = await fetch("http://localhost:3001/version-config.json");
-//       const versionConfig = await versionConfigReq.json();
-//       const script = document.createElement('script');
-//       script.src = "${url}/" + versionConfig.${globalName} + "/remoteEntry.js";
+const dynamicRemotes = Object.entries(remotes).reduce(
+  (acc, [alias, location]) => {
+    const [globalName, url] = location.split("@");
+    acc[alias] = endent`promise new Promise(async (resolve) => {
+      const versionConfigReq = await fetch("http://localhost:3001/version-config.json");
+      const versionConfig = await versionConfigReq.json();
+      const script = document.createElement('script');
+      script.src = "${url}/" + versionConfig.${globalName} + "/remoteEntry.js";
 
-//       script.onload = () => {
-//         const proxy = {
-//           get: (request) => window.${globalName}.get(request),
-//           init: (arg) => {
-//             try {
-//               return window.${globalName}.init(arg)
-//             } catch(e) {
-//               console.log('remote container already initialized')
-//             }
-//           }
-//         }
-//         resolve(proxy)
-//       }
+      script.onload = () => {
+        const proxy = {
+          get: (request) => window.${globalName}.get(request),
+          init: (arg) => {
+            try {
+              return window.${globalName}.init(arg)
+            } catch(e) {
+              console.log('remote container already initialized')
+            }
+          }
+        }
+        resolve(proxy)
+      }
 
-//       document.head.appendChild(script);
-//     })`;
+      document.head.appendChild(script);
+    })`;
 
-//     return acc;
-//   },
-//   {}
-// );
+    return acc;
+  },
+  {}
+);
 
 module.exports = [
   {
@@ -87,9 +87,7 @@ module.exports = [
       }),
       new ModuleFederationPlugin({
         name: "renderer",
-        remotes: {
-          "@descript/app": "descript_app@http://localhost:3001/remoteEntry.js",
-        },
+        remotes: dynamicRemotes,
         shared: {
           react: { singleton: true, requiredVersion: packageJsonDeps.react },
           "react-dom": {

@@ -1,3 +1,3 @@
 export const Button = () => (
-  <button style={{ background: "blue" }}>click me</button>
+  <button style={{ background: "green" }}>click me</button>
 );
