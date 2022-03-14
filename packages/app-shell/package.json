@@ -1,11 +1,12 @@
 {
-  "name": "@descript/app",
+  "name": "@descript/app-shell",
   "private": true,
   "version": "1.0.0",
-  "main": "src/index.tsx",
+  "main": "src/main.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "webpack --config ./webpack.config.js"
+    "build": "yarn clean && webpack --config ./webpack.config.js",
+    "start": "electron ./dist/main.js"
   },
   "dependencies": {
     "react": "^17.0.2",

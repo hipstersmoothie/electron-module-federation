@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "paths": {
+      "@descript/app": ["packages/app/src/index.tsx"],
       "@descript/design-system": ["packages/design-system/src/index.ts"]
     }
   }
